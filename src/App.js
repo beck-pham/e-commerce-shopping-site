@@ -5,10 +5,14 @@ import HomePage from './components/pages/homepage/HomePage';
 import ShopPage from './components/pages/shop/Shop';
 import Header from './components/header/Header';
 import SignInAndSignUpPage from './components/pages/sign-in-and-sign-up/Sign-in-and-sign-up';
+import CheckoutPage from './components/pages/checkout/Checkout';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
+import { selectCurrentUser } from './redux/user/user.selectors';
+import { createStructuredSelector } from 'reselect';
+
 class App extends React.Component {
   // constructor() {
   //   super();
@@ -62,6 +66,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/checkout" component={CheckoutPage} />
           <Route path="/shop" component={ShopPage} />
           <Route
             exact
@@ -82,8 +87,8 @@ class App extends React.Component {
 }
 
 //get the current user from redux state
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 });
 
 //dispatch an action to the store to trigger and update the "change" state
